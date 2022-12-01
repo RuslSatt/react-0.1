@@ -12,12 +12,13 @@
 
 header {
     width: 100%;
-    padding: 0 0.25em;
+    height: 50px;
     background-color: mediumblue;
     color: aliceblue;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    font-size: 26px;
 }
 
 main {
@@ -25,7 +26,7 @@ main {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     overflow-y: auto;
 }
@@ -37,6 +38,8 @@ footer {
     color: aliceblue;
     display: grid;
     place-content: center;
+    height: 50px;
+    font-size: 18px;
 }
 
 ul {
