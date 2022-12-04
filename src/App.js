@@ -13,19 +13,27 @@ function App() {
 
 	const [newItem, setNewItem] = useState('');
 	const [search, setSearch] = useState('')
+	const [error, setError] = useState(null);
+	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const response = await fetch(URL);
+				if (!response.ok) throw Error('No Data');
 				const listItems = await response.json();
 				console.log(listItems)
 				setItems(listItems)
+				setError(null)
 			} catch (e) {
-				console.error(e)
+				setError(e.message);
+			} finally {
+				setIsLoading(false);
 			}
 		}
-		fetchData()
+		setTimeout(() => {
+			fetchData()
+		}, 1000)
 	}, [])
 
 	const handleCheck = (id) => {
@@ -70,10 +78,16 @@ function App() {
 				search={search}
 				setSearch={setSearch}
 			></SearchItem>
-			<Content items={sortItems}
-					 handleCheck={handleCheck}
-					 handleDelete={handleDelete}>
-			</Content>
+			<main>
+				{isLoading && <p>Loading...</p>}
+				{error && <p>Error: {error}</p>}
+				{!error && !isLoading &&
+					<Content items={sortItems}
+							 handleCheck={handleCheck}
+							 handleDelete={handleDelete}>
+					</Content>
+				}
+			</main>
 			<Footer count={items?.length}></Footer>
 		</div>
 	);
