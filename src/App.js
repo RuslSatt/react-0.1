@@ -8,16 +8,25 @@ import AddItem from "./Components/Content/AddItem";
 import SearchItem from "./Components/Content/SearchItem";
 
 function App() {
-	const local = JSON.parse(localStorage.getItem('shoppingList'))
-	const [items, setItems] = useState(local || []);
+	const URL = 'http://localhost:3500/items';
+	const [items, setItems] = useState([]);
 
 	const [newItem, setNewItem] = useState('');
 	const [search, setSearch] = useState('')
 
-
 	useEffect(() => {
-		localStorage.setItem('shoppingList', JSON.stringify(items))
-	}, [items])
+		const fetchData = async () => {
+			try {
+				const response = await fetch(URL);
+				const listItems = await response.json();
+				console.log(listItems)
+				setItems(listItems)
+			} catch (e) {
+				console.error(e)
+			}
+		}
+		fetchData()
+	}, [])
 
 	const handleCheck = (id) => {
 		const list = [...items];
@@ -47,7 +56,7 @@ function App() {
 		setNewItem('');
 	}
 
-	const sortItems = items.filter((item) => item.item.toLowerCase().includes(search.toLowerCase()));
+	const sortItems = items?.filter((item) => item.item.toLowerCase().includes(search.toLowerCase()));
 
 	return (
 		<div className="App">
