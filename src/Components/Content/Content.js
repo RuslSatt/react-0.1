@@ -1,14 +1,11 @@
 import List from "./List";
 
-const Content = ({items, handleCheck, handleDelete}) => {
+const Content = ({items}) => {
+
 	return (
 		<>
 			{items.length ? (
-				<List
-					items={items}
-					handleCheck={handleCheck}
-					handleDelete={handleDelete}>
-				</List>
+				<List items={items}></List>
 			) : (
 				<p style={{marginTop: '2px'}}>List is empty</p>
 			)}
