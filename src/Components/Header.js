@@ -1,17 +1,13 @@
 import React from 'react';
-import ButtonQuery from "./Content/ButtonQuery";
+import Button from "./Content/Button";
 
-const Header = ({disabled, fetchData}) => {
-
-	const handleClick = async (e) => {
-		fetchData(e.target.id)
-	}
-
+const Header = ({disabled, reqType, setReqType}) => {
 	return (
 		<header className="headerQuery">
-			<ButtonQuery handleClick={handleClick} disabled={disabled} id={'users'} name={'Users'}></ButtonQuery>
-			<ButtonQuery handleClick={handleClick} disabled={disabled} id={'posts'} name={'Posts'}></ButtonQuery>
-			<ButtonQuery handleClick={handleClick} disabled={disabled} id={'comments'} name={'Comments'}></ButtonQuery>
+			<Button reqType={reqType} setReqType={setReqType} disabled={disabled} id={'users'} name={'Users'}></Button>
+			<Button reqType={reqType} setReqType={setReqType} disabled={disabled} id={'posts'} name={'Posts'}></Button>
+			<Button reqType={reqType} setReqType={setReqType} disabled={disabled} id={'comments'}
+					name={'Comments'}></Button>
 		</header>
 	);
 };

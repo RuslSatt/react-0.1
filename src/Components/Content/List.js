@@ -3,11 +3,11 @@ import LineItem from "./LineItem";
 
 const List = ({items}) => {
 	return (
-		<ul>
-			{items.map((item) => (
-				<LineItem key={item.id} item={item}></LineItem>
-			))}
-		</ul>
+		<tbody>
+		{items.map((item) => (
+			<LineItem key={item.id} item={item}></LineItem>
+		))}
+		</tbody>
 	);
 };
 

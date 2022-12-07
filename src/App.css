@@ -75,6 +75,15 @@ button:disabled {
     background: #eeeeee;
 }
 
+td {
+    border: 1px solid #000;
+    padding: 0.25rem;
+}
+
+.selected {
+    background: aqua;
+}
+
 .item {
     display: flex;
     justify-content: flex-start;

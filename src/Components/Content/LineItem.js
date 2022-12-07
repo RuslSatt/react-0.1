@@ -2,9 +2,12 @@ import React from 'react';
 
 const LineItem = ({item}) => {
 	return (
-		<li className="item">
-			{JSON.stringify(item)}
-		</li>
+		<tr className="item">
+			{Object.entries(item).map(([key, value]) => (
+				<td key={key}>{JSON.stringify(value)}</td>
+			))}
+			{/*{JSON.stringify(item)}*/}
+		</tr>
 	);
 };
 
