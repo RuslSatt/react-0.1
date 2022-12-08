@@ -1,10 +1,10 @@
 import React from 'react';
 import NavButton from "./NavButton";
 
-const NavItem = () => {
+const NavItem = ({text}) => {
 	return (
 		<li>
-			<NavButton></NavButton>
+			<NavButton text={text}></NavButton>
 		</li>
 	);
 };
