@@ -1,7 +1,7 @@
 import './normalize.css';
 import './App.css';
 import Header from "./Components/Header";
-import ToolBar from "./Components/ToolBar";
+import Nav from "./Components/Nav";
 import {useState} from "react";
 import Footer from "./Components/Footer";
 import styled from "styled-components";
@@ -13,11 +13,11 @@ import {Route, Routes} from "react-router-dom";
 // npx json-server -p 3100 -w data/db.json
 
 function App() {
-	const [value, setValue] = useState('')
+	const [search, setSearch] = useState('')
 	return (
 		<div className="App">
 			<Header></Header>
-			<ToolBar value={value} setValue={setValue}></ToolBar>
+			<Nav search={search} setSearch={setSearch}></Nav>
 
 			<Main>
 				<Routes>
@@ -26,7 +26,6 @@ function App() {
 					<Route path="/about" element={<About/>}/>
 				</Routes>
 			</Main>
-
 
 			<Footer></Footer>
 		</div>

@@ -1,12 +1,17 @@
 import React from 'react';
-import NavButton from "./NavButton";
+import {Link} from "react-router-dom";
+import styled from "styled-components";
 
-const NavItem = ({text}) => {
+const NavItem = ({text, link}) => {
 	return (
 		<li>
-			<NavButton text={text}></NavButton>
+			<StyledLink to={link}>{text}</StyledLink>
 		</li>
 	);
 };
+
+const StyledLink = styled(Link)`
+  color: #000;
+`
 
 export default NavItem;

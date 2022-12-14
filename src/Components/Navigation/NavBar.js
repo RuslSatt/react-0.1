@@ -4,24 +4,18 @@ import styled from "styled-components";
 
 const NavBar = () => {
 	return (
-		<Nav>
-			<Ul>
-				<NavItem text={'Home'}></NavItem>
-				<NavItem text={'Post'}></NavItem>
-				<NavItem text={'About'}></NavItem>
-			</Ul>
-		</Nav>
+		<Ul>
+			<NavItem link={'/'} text={'Home'}></NavItem>
+			<NavItem link={'/post'} text={'Post'}></NavItem>
+			<NavItem link={'/about'} text={'About'}></NavItem>
+		</Ul>
 	);
 };
 
-const Nav = styled.nav`
+const Ul = styled.ul`
   display: flex;
   justify-content: flex-end;
   width: 100%;
-`
-
-const Ul = styled.ul`
-  display: flex;
   gap: 30px;
 `
 

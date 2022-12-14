@@ -3,16 +3,16 @@ import NavBar from "./Navigation/NavBar";
 import Form from "./Form";
 import styled from "styled-components";
 
-const ToolBar = ({value, setValue}) => {
+const Nav = ({search, setSearch}) => {
 	return (
 		<Wrapper>
-			<Form value={value} setValue={setValue}></Form>
+			<Form search={search} setSearch={setSearch}></Form>
 			<NavBar></NavBar>
 		</Wrapper>
 	);
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.nav`
   min-height: 50px;
   display: flex;
   align-items: center;
@@ -21,4 +21,4 @@ const Wrapper = styled.div`
   padding: 10px;
 `
 
-export default ToolBar;
+export default Nav;
