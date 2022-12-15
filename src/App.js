@@ -4,26 +4,60 @@ import Header from "./Components/Header";
 import Nav from "./Components/Nav";
 import {useEffect, useState} from "react";
 import Footer from "./Components/Footer";
-import styled from "styled-components";
 import Home from "./Components/Content/Home";
 import Post from "./Components/Content/Post";
 import About from "./Components/Content/About";
-import {Route, Routes} from "react-router-dom";
-import {getItems} from "./API";
+import {Route, Routes, useNavigate} from "react-router-dom";
+import PostPage from "./Components/Content/PostPage";
 
 // npx json-server -p 3100 -w data/db.json
 
 function App() {
-	const [items, setItems] = useState([])
+	const [posts, setPosts] = useState([
+		{
+			id: 1,
+			title: "My First Post",
+			datetime: "July 01, 2021 11:17:36 AM",
+			body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!",
+		},
+		{
+			id: 2,
+			title: "My 2nd Post",
+			datetime: "July 01, 2021 11:17:36 AM",
+			body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!",
+		},
+		{
+			id: 3,
+			title: "My 3rd Post",
+			datetime: "July 01, 2021 11:17:36 AM",
+			body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!",
+		},
+		{
+			id: 4,
+			title: "My Fourth Post",
+			datetime: "July 01, 2021 11:17:36 AM",
+			body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!",
+		},
+	])
 	const [search, setSearch] = useState('')
-	const filteredItems = items.filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
+	const navigate = useNavigate();
+
+	const handleDelete = (id) => {
+		const updatedPosts = posts.filter(post => post.id !== id);
+		if (updatedPosts?.length) {
+			setPosts(updatedPosts);
+			navigate('/')
+		}
+	}
+
+	// const filteredPosts = posts.filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const res = await getItems();
-			if (res) setItems(res);
-		}
-		fetchData();
+		// const fetchData = async () => {
+		// 	const res = await getItems();
+		// 	if (res) setPosts(res);
+		// }
+		// fetchData();
 	}, [])
 
 	return (
@@ -31,21 +65,18 @@ function App() {
 			<Header></Header>
 			<Nav search={search} setSearch={setSearch}></Nav>
 
-			<Main>
-				<Routes>
-					<Route path="/" element={<Home items={filteredItems}/>}/>
-					<Route path="/post" element={<Post/>}/>
-					<Route path="/about" element={<About/>}/>
-				</Routes>
-			</Main>
+			<Routes>
+				<Route path="/" element={<Home posts={posts}/>}/>
+				<Route path="/post" element={<Post/>}/>
+				<Route path="/about" element={<About/>}/>
+				<Route path="/post/:id"
+					   element={<PostPage posts={posts} handleDelete={handleDelete}></PostPage>}></Route>
+			</Routes>
 
 			<Footer></Footer>
 		</div>
 	);
 }
 
-const Main = styled.main`
-  flex-grow: 1;
-`
 
 export default App;

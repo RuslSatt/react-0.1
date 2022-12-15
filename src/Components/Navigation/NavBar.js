@@ -1,16 +1,26 @@
 import React from 'react';
-import NavItem from "./NavItem";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 const NavBar = () => {
 	return (
 		<Ul>
-			<NavItem link={'/'} text={'Home'}></NavItem>
-			<NavItem link={'/post'} text={'Post'}></NavItem>
-			<NavItem link={'/about'} text={'About'}></NavItem>
+			<li>
+				<StyledLink to="/">Home</StyledLink>
+			</li>
+			<li>
+				<StyledLink to="/post">Post</StyledLink>
+			</li>
+			<li>
+				<StyledLink to="/about">About</StyledLink>
+			</li>
 		</Ul>
 	);
 };
+
+export const StyledLink = styled(Link)`
+  color: #000;
+`
 
 const Ul = styled.ul`
   display: flex;

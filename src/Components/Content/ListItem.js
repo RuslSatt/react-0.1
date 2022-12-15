@@ -1,21 +1,37 @@
 import React from 'react';
 import styled from "styled-components";
+import {StyledLink} from "../Navigation/NavBar";
 
-const ListItem = ({item}) => {
+const ListItem = ({post}) => {
+	const body = post.body.length > 25 ? post.body.slice(0, 25) + '...' : post.body;
 	return (
 		<Item>
-			<Title>{item.title}</Title>
-			<Text>{item.body}</Text>
+			<StyledLink to={`/post/${post.id}`}>
+				<Title>{post.title}</Title>
+				<Date>{post.datetime}</Date>
+				<Text>{body}</Text>
+			</StyledLink>
 		</Item>
 	);
 };
 
+export const Date = styled.p`
+  font-size: 14px;
+  margin-bottom: 15px;
+`
+
 const Item = styled.li`
-  background: azure;
+  background: #ecebeb;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
   border: 1px solid #000;
   cursor: pointer;
+
+  &:hover {
+    transition: background-color, 0.15s;
+    background: #a6a6a6;
+    color: #fff;
+  }
 `
 
 const Title = styled.p`
@@ -25,7 +41,6 @@ const Title = styled.p`
 
 const Text = styled.p`
   font-size: 14px;
-
 `
 
 export default ListItem;

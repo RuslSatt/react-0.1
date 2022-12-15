@@ -2,9 +2,9 @@ import React from 'react';
 import styled from "styled-components";
 import ListItem from "./ListItem";
 
-const Posts = ({items}) => {
+const Posts = ({posts}) => {
 
-	const listItems = items.map(item => <ListItem item={item} key={item.id}/>)
+	const listItems = posts.map(post => <ListItem post={post} key={post.id}/>)
 
 	return (
 		<List>

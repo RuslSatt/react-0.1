@@ -2,19 +2,19 @@ import React from 'react';
 import styled from "styled-components";
 import Posts from "./Posts";
 
-const Home = ({items}) => {
+const Home = ({posts}) => {
 	return (
-		<Container>
-			{items.length ? (
-				<Posts items={items}></Posts>
+		<Main>
+			{posts.length ? (
+				<Posts posts={posts}></Posts>
 			) : <p>No content</p>}
-		</Container>
+		</Main>
 	);
 };
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
+export const Main = styled.main`
+  flex-grow: 1;
+  padding: 10px;
 `
 
 export default Home;
