@@ -1,0 +1,27 @@
+.main {
+    @apply grow p-2.5;
+
+    .postTitle {
+        @apply text-lg font-medium mb-4;
+    }
+
+    .nameBlock {
+        @apply flex flex-col mb-3;
+    }
+
+    .contentPost {
+        @apply flex flex-col mb-4;
+    }
+}
+
+.input {
+    @apply p-3 bg-slate-300 h-8 rounded mt-2 w-full;
+}
+
+.textarea {
+    @apply bg-slate-300 p-2 h-20 mt-2;
+}
+
+.button {
+    @apply py-1.5 px-4 bg-slate-500 text-white rounded text-base;
+}
