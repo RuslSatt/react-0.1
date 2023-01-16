@@ -40,6 +40,7 @@ function App() {
         },
     ]);
     const [search, setSearch] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
     const navigate = useNavigate();
 
     const handleDelete = id => {
@@ -52,7 +53,7 @@ function App() {
 
     const handleSubmit = (name, content) => {
         const id = posts?.length ? posts[posts.length - 1] : 1;
-        const dateTime = new Date();
+        // const dateTime = new Date();
         const model = {
             id: id,
             title: name,
@@ -66,12 +67,15 @@ function App() {
     // const filteredPosts = posts.filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
 
     useEffect(() => {
-        // const fetchData = async () => {
-        // 	const res = await getItems();
-        // 	if (res) setPosts(res);
-        // }
-        // fetchData();
-    }, []);
+        const filteredResults = posts.filter(model => {
+            return includesSearch(model.body) || includesSearch(model.title);
+        });
+        setSearchResult(filteredResults);
+    }, [posts, search]);
+
+    const includesSearch = value => {
+        if (value.toLowerCase().includes(search)) return true;
+    };
 
     return (
         <div className="App">
@@ -79,7 +83,7 @@ function App() {
             <Nav search={search} setSearch={setSearch}></Nav>
 
             <Routes>
-                <Route path="/" element={<Home posts={posts} />} />
+                <Route path="/" element={<Home posts={searchResult} />} />
                 <Route path="/post" element={<Post handleSubmit={handleSubmit} />} />
                 <Route path="/about" element={<About />} />
                 <Route

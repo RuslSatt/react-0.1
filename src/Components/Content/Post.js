@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Content.module.scss';
 
 const Post = ({ handleSubmit }) => {
     const [name, setName] = useState('');
     const [content, setContent] = useState('');
+
+    const navigate = useNavigate();
 
     return (
         <main className={styles.main}>
@@ -26,7 +29,13 @@ const Post = ({ handleSubmit }) => {
                     onChange={e => setContent(e.target.value)}
                 ></textarea>
             </div>
-            <button onClick={() => handleSubmit(name, content)} className={styles.button}>
+            <button
+                onClick={() => {
+                    handleSubmit(name, content);
+                    navigate('/');
+                }}
+                className={styles.button}
+            >
                 Create post
             </button>
         </main>
