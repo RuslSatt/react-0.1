@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Content.module.scss';
 
-const Post = () => {
+const Post = ({ handleSubmit }) => {
     const [name, setName] = useState('');
     const [content, setContent] = useState('');
 
@@ -26,7 +26,9 @@ const Post = () => {
                     onChange={e => setContent(e.target.value)}
                 ></textarea>
             </div>
-            <button className={styles.button}>Create post</button>
+            <button onClick={() => handleSubmit(name, content)} className={styles.button}>
+                Create post
+            </button>
         </main>
     );
 };

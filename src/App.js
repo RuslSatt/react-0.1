@@ -50,6 +50,19 @@ function App() {
         }
     };
 
+    const handleSubmit = (name, content) => {
+        const id = posts?.length ? posts[posts.length - 1] : 1;
+        const dateTime = new Date();
+        const model = {
+            id: id,
+            title: name,
+            datetime: '01.01.2022',
+            body: content,
+        };
+        const list = [...posts, model];
+        setPosts(list);
+    };
+
     // const filteredPosts = posts.filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
 
     useEffect(() => {
@@ -67,7 +80,7 @@ function App() {
 
             <Routes>
                 <Route path="/" element={<Home posts={posts} />} />
-                <Route path="/post" element={<Post />} />
+                <Route path="/post" element={<Post handleSubmit={handleSubmit} />} />
                 <Route path="/about" element={<About />} />
                 <Route
                     path="/post/:id"
