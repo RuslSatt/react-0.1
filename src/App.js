@@ -19,16 +19,21 @@ function App() {
     const [searchResult, setSearchResult] = useState([]);
     const navigate = useNavigate();
 
-    const handleDelete = id => {
-        const updatedPosts = posts.filter(post => post.id !== id);
-        if (updatedPosts?.length) {
+    const handleDelete = async id => {
+        try {
+            await api.delete(`/posts/${id}`);
+            const updatedPosts = posts.filter(post => post.id !== id);
             setPosts(updatedPosts);
             navigate('/');
+        } catch (err) {
+            console.log(err.response.data);
         }
     };
 
-    const handleSubmit = (name, content) => {
-        const id = posts?.length ? posts[posts.length - 1] : 1;
+    const handleEdit = async id => {};
+
+    const handleSubmit = async (name, content) => {
+        const id = posts?.length ? posts[posts.length - 1].id + 1 : 1;
         // const dateTime = new Date();
         const model = {
             id: id,
@@ -36,8 +41,14 @@ function App() {
             datetime: '01.01.2022',
             body: content,
         };
-        const list = [...posts, model];
-        setPosts(list);
+
+        try {
+            const response = await api.post('/posts', model);
+            const list = [...posts, response.data];
+            setPosts(list);
+        } catch (err) {
+            console.log(err.response.data);
+        }
     };
 
     useEffect(() => {
