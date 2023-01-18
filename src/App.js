@@ -10,6 +10,7 @@ import About from './Components/Content/About';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import PostPage from './Components/Content/PostPage';
 import api from './api/posts';
+import { EditPage } from './Components/Content/EditPage';
 
 // npx json-server -p 3100 -w data/db.json
 
@@ -17,6 +18,7 @@ function App() {
     const [posts, setPosts] = useState([]);
     const [search, setSearch] = useState('');
     const [searchResult, setSearchResult] = useState([]);
+
     const navigate = useNavigate();
 
     const handleDelete = async id => {
@@ -30,15 +32,27 @@ function App() {
         }
     };
 
-    const handleEdit = async id => {};
+    const handleEdit = async (id, title, body) => {
+        const updatedPosts = {
+            id,
+            title,
+            body,
+        };
+
+        try {
+            const response = await api.put(`/posts/${id}`, updatedPosts);
+            setPosts(posts.map(model => (model.id === id ? { ...response.data } : model)));
+            navigate('/');
+        } catch (err) {
+            console.log(err.response.data);
+        }
+    };
 
     const handleSubmit = async (name, content) => {
         const id = posts?.length ? posts[posts.length - 1].id + 1 : 1;
-        // const dateTime = new Date();
         const model = {
             id: id,
             title: name,
-            datetime: '01.01.2022',
             body: content,
         };
 
@@ -46,6 +60,7 @@ function App() {
             const response = await api.post('/posts', model);
             const list = [...posts, response.data];
             setPosts(list);
+            navigate('/');
         } catch (err) {
             console.log(err.response.data);
         }
@@ -71,7 +86,7 @@ function App() {
     }, [posts, search]);
 
     const includesSearch = value => {
-        if (value.toLowerCase().includes(search)) return true;
+        if (value?.toLowerCase().includes(search)) return true;
     };
 
     return (
@@ -86,6 +101,10 @@ function App() {
                 <Route
                     path="/post/:id"
                     element={<PostPage posts={posts} handleDelete={handleDelete}></PostPage>}
+                ></Route>
+                <Route
+                    path="/edit/:id"
+                    element={<EditPage handleEdit={handleEdit} posts={posts}></EditPage>}
                 ></Route>
             </Routes>
 

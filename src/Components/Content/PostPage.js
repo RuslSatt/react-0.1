@@ -11,14 +11,19 @@ const PostPage = ({ posts, handleDelete }) => {
             {post && (
                 <>
                     <h2 className="text-lg leading-none mb-2">{post.title}</h2>
-                    <p className="text-sm mb-2">{post.datetime}</p>
+                    {/* <p className="text-sm mb-2">{post.datetime}</p> */}
                     <p className="mb-5">{post.body}</p>
-                    <button
-                        className="py-1.5 px-4 bg-slate-500 rounded"
-                        onClick={() => handleDelete(post.id)}
-                    >
-                        Delete
-                    </button>
+                    <div>
+                        <button
+                            className="py-1.5 px-4 bg-slate-500 rounded"
+                            onClick={() => handleDelete(post.id)}
+                        >
+                            Delete
+                        </button>
+                        <Link className="py-1.5 px-4 bg-slate-500 rounded" to={`/edit/${post.id}`}>
+                            Edit
+                        </Link>
+                    </div>
                 </>
             )}
             {!post && (
