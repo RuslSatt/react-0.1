@@ -11,6 +11,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import PostPage from './Components/Content/PostPage';
 import api from './api/posts';
 import { EditPage } from './Components/Content/EditPage';
+import useWindowSize from './hooks/useWindowSize';
 
 // npx json-server -p 3100 -w data/db.json
 
@@ -20,6 +21,7 @@ function App() {
     const [searchResult, setSearchResult] = useState([]);
 
     const navigate = useNavigate();
+    const { width } = useWindowSize();
 
     const handleDelete = async id => {
         try {
@@ -91,7 +93,7 @@ function App() {
 
     return (
         <div className="App">
-            <Header></Header>
+            <Header width={width}></Header>
             <Nav search={search} setSearch={setSearch}></Nav>
 
             <Routes>
