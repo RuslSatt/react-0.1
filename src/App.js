@@ -12,6 +12,7 @@ import PostPage from './Components/Content/PostPage';
 import api from './api/posts';
 import { EditPage } from './Components/Content/EditPage';
 import useWindowSize from './hooks/useWindowSize';
+import useAxiosFetch from './hooks/useAxiosFetch';
 
 // npx json-server -p 3100 -w data/db.json
 
@@ -22,6 +23,12 @@ function App() {
 
     const navigate = useNavigate();
     const { width } = useWindowSize();
+
+    const { data, error, isLoading } = useAxiosFetch('http://localhost:3100/posts');
+
+    useEffect(() => {
+        setPosts(data);
+    }, [data]);
 
     const handleDelete = async id => {
         try {
@@ -69,18 +76,6 @@ function App() {
     };
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await api.get('/posts');
-                setPosts(response.data);
-            } catch (err) {
-                console.log(err.response.data);
-            }
-        };
-        fetchPosts();
-    }, []);
-
-    useEffect(() => {
         const filteredResults = posts.filter(model => {
             return includesSearch(model.body) || includesSearch(model.title);
         });
@@ -97,7 +92,10 @@ function App() {
             <Nav search={search} setSearch={setSearch}></Nav>
 
             <Routes>
-                <Route path="/" element={<Home posts={searchResult} />} />
+                <Route
+                    path="/"
+                    element={<Home posts={searchResult} isLoading={isLoading} error={error} />}
+                />
                 <Route path="/post" element={<Post handleSubmit={handleSubmit} />} />
                 <Route path="/about" element={<About />} />
                 <Route
