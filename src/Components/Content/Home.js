@@ -1,15 +1,18 @@
 import React from 'react';
+import { useContext } from 'react';
+import DataContext from '../../context/DataContext';
 import styled from 'styled-components';
 import Posts from './Posts';
 
-const Home = ({ posts, isLoading, error }) => {
+const Home = () => {
+    const { searchResult, isLoading, error } = useContext(DataContext);
     return (
         <Main>
             {isLoading && <p>Loading...</p>}
             {error && <p>Error...</p>}
             {!isLoading &&
                 !error &&
-                (posts.length ? <Posts posts={posts}></Posts> : <p>No content</p>)}
+                (searchResult.length ? <Posts posts={searchResult}></Posts> : <p>No content</p>)}
         </Main>
     );
 };

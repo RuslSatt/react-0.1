@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { FaLaptop, FaTabletAlt, FaMobileAlt } from 'react-icons/fa';
+import useWindowSize from '../hooks/useWindowSize';
 
-const Header = ({ width }) => {
+const Header = () => {
+    const { width } = useWindowSize();
     return (
         <Wrapper className="gap-2">
             <Text>React Js Blog</Text>

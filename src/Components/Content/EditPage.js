@@ -1,11 +1,34 @@
 import React, { useEffect } from 'react';
+import { useContext } from 'react';
+import DataContext from '../../context/DataContext';
 import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import styles from './Content.module.scss';
+import api from '../../api/posts';
 
-export const EditPage = ({ postTitle, postBody, handleEdit, posts }) => {
+export const EditPage = () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
+
+    const { posts, setPosts } = useContext(DataContext);
+
+    const navigate = useNavigate();
+
+    const handleEdit = async (id, title, body) => {
+        const updatedPosts = {
+            id,
+            title,
+            body,
+        };
+
+        try {
+            const response = await api.put(`/posts/${id}`, updatedPosts);
+            setPosts(posts.map(model => (model.id === id ? { ...response.data } : model)));
+            navigate('/');
+        } catch (err) {
+            console.log(err.response.data);
+        }
+    };
 
     const { id } = useParams();
     const post = posts.find(post => post.id.toString() === id);

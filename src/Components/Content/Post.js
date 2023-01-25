@@ -1,12 +1,34 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import api from '../../api/posts';
+import DataContext from '../../context/DataContext';
 import styles from './Content.module.scss';
 
-const Post = ({ handleSubmit }) => {
+const Post = () => {
     const [name, setName] = useState('');
     const [content, setContent] = useState('');
+    const { posts, setPosts } = useContext(DataContext);
 
     const navigate = useNavigate();
+
+    const handleSubmit = async (name, content) => {
+        const id = posts?.length ? posts[posts.length - 1].id + 1 : 1;
+        const model = {
+            id: id,
+            title: name,
+            body: content,
+        };
+
+        try {
+            const response = await api.post('/posts', model);
+            const list = [...posts, response.data];
+            setPosts(list);
+            navigate('/');
+        } catch (err) {
+            console.log(err.response.data);
+        }
+    };
 
     return (
         <main className={styles.main}>
